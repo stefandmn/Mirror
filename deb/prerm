@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ "$1" == "remove" ]; then
+	# Remove service
+	if [ $(ps -ef | grep "mirror" | grep -v "grep" | grep -v "apt" | grep -v "dpkg" | grep -v "init" | wc -l) -eq 0 ]; then
+		/bin/systemctl stop clue-mirror >/dev/null 2>&1
+	fi
+	/bin/systemctl disable clue-mirror >/dev/null 2>&1
+	/bin/systemctl daemon-reload >/dev/null 2>&1
+	/opt/clue/bin/splash --exit
+fi

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ "$1" == "configure" ]; then
+	# Register service
+	chmod +x /opt/clue/bin/mirror
+	/bin/systemctl enable clue-mirror >/dev/null 2>&1
+	/bin/systemctl daemon-reload >/dev/null 2>&1
+fi
