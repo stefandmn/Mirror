@@ -1,3 +1,10 @@
+
+/**
+ * Clue Media Experience
+ * Resource.cpp - implementation of Resource object
+ */
+
+
 #include "Resource.h"
 #include "Exception.h"
 
@@ -9,13 +16,15 @@ Resource::~Resource()
 void Resource::Create(VC_IMAGE_TYPE_T type, int width, int height, uint32_t *vc_image_ptr)
 {
 	m_resource = vc_dispmanx_resource_create(type, width, height, vc_image_ptr);
+
 	if (m_resource == DISPMANX_NO_HANDLE)
 		throw Exception("vc_dispmanx_resource_create failed");
 }
 
 void Resource::Close()
 {
-	if (m_resource != DISPMANX_NO_HANDLE) {
+	if (m_resource != DISPMANX_NO_HANDLE)
+	{
 		vc_dispmanx_resource_delete(m_resource);
 		m_resource = DISPMANX_NO_HANDLE;
 	}

@@ -1,4 +1,10 @@
 
+/**
+ * Clue Media Experience
+ * mirror.cpp - implementation of main logic of Mirror VNC server
+ */
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -61,12 +67,12 @@ int main(int argc, char *argv[])
 	{
 		if (signal(SIGINT, sig_handler) == SIG_ERR)
 		{
-			throw Exception( "error setting sighandler");
+			throw Exception( "Error setting sighandler");
 		}
 		
 		if (signal(SIGTERM, sig_handler) == SIG_ERR) 
 		{
-			throw Exception("error setting sighandler");
+			throw Exception("Error setting sighandler");
 		}
 
 		ConfigData configData;
@@ -230,13 +236,13 @@ bool ReadConfigFile(const char *programName, const std::string& configFile, Conf
 		configFileTemp = programName;
 		configFileTemp += ".conf";
 		readConfig = TryReadConfigFile(config, configFileTemp);
-		if (!readConfig) {
+		if (!readConfig)
+		{
 			const char *baseName = basename(programName);
-			configFileTemp = "/etc/";
+			configFileTemp = "/opt/clue/etc/";
 			configFileTemp += baseName;
 			configFileTemp += ".conf";
 			std::cerr << "trying: " << configFileTemp << '\n';
-			//configFileTemp = "/etc/dispmanx_vncserver.conf";
 			readConfig = TryReadConfigFile(config, configFileTemp);
 		}
 	}

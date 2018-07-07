@@ -1,3 +1,10 @@
+
+/**
+ * Clue Media Experience
+ * Exception.h - declaration and implementation of general Exception object
+ */
+
+
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 

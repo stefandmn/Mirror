@@ -1,4 +1,10 @@
 
+/**
+ * Clue Media Experience
+ * Keyboard.cpp - implementation of Keyboard object
+ */
+
+
 #include "Keyboard.h"
 #include <rfb/keysym.h>
 
@@ -9,13 +15,16 @@ void Keyboard::DoKey(rfbBool down, rfbKeySym key)
 	bool wasDown = m_downKeys[scancode];
 	int event;
 
-	if (down && wasDown) {
+	if (down && wasDown)
+	{
 		event = 2; // key repeat
 	}
-	else if (down) {
+	else if (down)
+	{
 		event = 1; // key down
 	}
-	else {
+	else
+	{
 		event = 0; // key up
 	}
 
@@ -33,38 +42,48 @@ int Keyboard::KeySymToScanCode(rfbKeySym key)
 	int scancode = 0;
 
 	int code = (int)key;
-	if (code >= '0' && code <= '9') {
+	if (code >= '0' && code <= '9')
+	{
 		scancode = (code & 0xF) - 1;
 		if (scancode<0) scancode += 10;
 		scancode += KEY_1;
 	}
-	else if (code >= 0xFF50 && code <= 0xFF58) {
+	else if (code >= 0xFF50 && code <= 0xFF58)
+	{
 		static const uint16_t map[] =
 		{ KEY_HOME, KEY_LEFT, KEY_UP, KEY_RIGHT, KEY_DOWN,
-			KEY_PAGEUP, KEY_PAGEDOWN, KEY_END, 0 };
+			KEY_PAGEUP, KEY_PAGEDOWN, KEY_END, 0
+		};
 		scancode = map[code & 0xF];
 	}
-	else if (code >= 0xFFE1 && code <= 0xFFEE) {
+	else if (code >= 0xFFE1 && code <= 0xFFEE)
+	{
 		static const uint16_t map[] =
 		{ KEY_LEFTSHIFT, KEY_LEFTSHIFT,
 			KEY_LEFTCTRL, KEY_LEFTCTRL,
 			KEY_LEFTSHIFT, KEY_LEFTSHIFT,
 			0, 0,
 			KEY_LEFTALT, KEY_RIGHTALT,
-			0, 0, 0, 0 };
+			0, 0, 0, 0
+		};
 		scancode = map[code & 0xF];
 	}
-	else if ((code >= 'A' && code <= 'Z') || (code >= 'a' && code <= 'z')) {
-		static const uint16_t map[] = {
+	else if ((code >= 'A' && code <= 'Z') || (code >= 'a' && code <= 'z'))
+	{
+		static const uint16_t map[] =
+		{
 			KEY_A, KEY_B, KEY_C, KEY_D, KEY_E,
 			KEY_F, KEY_G, KEY_H, KEY_I, KEY_J,
 			KEY_K, KEY_L, KEY_M, KEY_N, KEY_O,
 			KEY_P, KEY_Q, KEY_R, KEY_S, KEY_T,
-			KEY_U, KEY_V, KEY_W, KEY_X, KEY_Y, KEY_Z };
+			KEY_U, KEY_V, KEY_W, KEY_X, KEY_Y, KEY_Z
+		};
 		scancode = map[(code & 0x5F) - 'A'];
 	}
-	else {
-		switch (code) {
+	else
+	{
+		switch (code)
+		{
 		case XK_space:    scancode = KEY_SPACE;       break;
 
 		case XK_exclam: scancode = KEY_1; break;

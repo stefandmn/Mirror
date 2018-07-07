@@ -1,4 +1,10 @@
 
+/**
+ * Clue Media Experience
+ * UFile.cpp - implementation of UFile object
+ */
+
+
 #include "UFile.h"
 #include "Exception.h"
 #include <stdio.h>

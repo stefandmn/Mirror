@@ -1,3 +1,10 @@
+
+/**
+ * Clue Media Experience
+ * BCMHost.h - BCM host declaration
+ */
+
+
 #ifndef BCMHOST_H
 #define BCMHOST_H
 

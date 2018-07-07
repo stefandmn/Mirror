@@ -1,4 +1,10 @@
 
+/**
+ * Clue Media Experience
+ * Display.cpp - implementation of Display object
+ */
+
+
 #include <stdio.h>
 #include "Display.h"
 #include "Exception.h"

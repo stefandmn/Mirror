@@ -1,3 +1,10 @@
+
+/**
+ * Clue Media Experience
+ * Resource.h - declaration of Resource object
+ */
+
+
 #ifndef RESOURCE_H
 #define RESOURCE_H
 

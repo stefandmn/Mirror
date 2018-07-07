@@ -1,3 +1,10 @@
+
+/**
+ * Clue Media Experience
+ * VNCServer.cpp - implementation of VNCServer object
+ */
+
+
 #include "VNCServer.h"
 #include "Exception.h"
 
@@ -164,7 +171,7 @@ void VNCServer::Run(int port, const std::string& password,
 		server->desktopName = desktopName.c_str();
 	}
 	else
-		server->desktopName = "VNC server via dispmanx";
+		server->desktopName = "Clue Mirror VNC server";
 
 	if (m_downscale)
 		frameBuffer.resize(frameBufferPitch*info.height / 2);

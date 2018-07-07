@@ -1,3 +1,10 @@
+
+/**
+ * Clue Media Experience
+ * Mouse.cpp - implementation of Keyboard object
+ */
+
+
 #include "Mouse.h"
 
 void Mouse::DoPtr(int buttonMask, int x, int y)

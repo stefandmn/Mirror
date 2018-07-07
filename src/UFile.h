@@ -1,3 +1,10 @@
+
+/**
+ * Clue Media Experience
+ * UFile.h - declaration of UFile object
+ */
+
+
 #ifndef UFILE_H
 #define UFILE_H
 

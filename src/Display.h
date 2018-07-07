@@ -1,3 +1,10 @@
+
+/**
+ * Clue Media Experience
+ * Display.h - declaration of Display object
+ */
+
+
 #ifndef DISPLAY_H
 #define DISPLAY_H
 

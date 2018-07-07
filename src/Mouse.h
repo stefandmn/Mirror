@@ -1,3 +1,10 @@
+
+/**
+ * Clue Media Experience
+ * Mouse.h - declaration of Mouse object
+ */
+
+
 #pragma once
 
 #include "UFile.h"
