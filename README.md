@@ -6,8 +6,9 @@ frame buffer and OpenGL ES technologies. **Mirror** is an
 optional module of **Clue OS**, providing console sharing over
 frame buffer and media player screen sharing and I/O handling 
 over GLES. **Mirror** runs as a system service and a specific 
-configuration might be stored and use in _/opt/clue/etc/mirror.conf_. 
-VNC server instance can be started and run with the following settings:
+configuration might be stored and use in `/opt/clue/etc/mirror.conf`
+file. VNC server instance can be started and run with the following
+settings:
 
  - `-c` or `--config-file=FILE` - use the specified configuration file
  - `-d` or `--downscale` - downscales the screen to a quarter in vnc
