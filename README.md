@@ -28,6 +28,6 @@ the remote content and also you can control it using standard I/O (remote
 keyboard and mouse).
 
 The main interest of VNC is that it allows to take control of a remote machine, 
-while displaying the desktop of it. So you can see in real time what is happening 
-on your Raspberry Pi, without having to plug it into a screen!
+while displaying the screen of it. So you can see in real time what is happening
+on your Raspberry Pi, without having to plug it into a monitor!
 
