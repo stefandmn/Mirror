@@ -5,7 +5,7 @@
 #
 # Custom build workflow to compile annd build binaries for Mirror module
 #
-# @version $Id: buildremote.sh 2204 2018-06-17 19:10:10Z stefan $
+# @version $Id: buildremote.sh 2306 2018-12-29 17:46:48Z stefan $
 ##########################################################################
 # Set global variables and execute initialization operation
 
@@ -242,10 +242,10 @@ function run()
 
 function prerequisites()
 {
-	apt-get install -y libvncserver-dev and libraspberrypi-dev
+	apt-get install -y libconfig++-dev libvncserver-dev and libraspberrypi-dev
 
 	## Stop service and make it to not run automatically
-	ccccccc/opt/clue/bin/setup -s service -m "clue-mirror"
+	/opt/clue/bin/setup -s service -m "clue-mirror"
 }
 
 
