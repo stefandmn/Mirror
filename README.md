@@ -1,14 +1,16 @@
-# Clue Mirror
+# Mirror
 
-**Mirror** is a particular VNC server for Raspberry Pi devices
-allowing to share graphical screens described by X server, 
-frame buffer and OpenGL ES technologies. **Mirror** is an
-optional module of **Clue OS**, providing console sharing over
-frame buffer and media player screen sharing and I/O handling 
-over GLES. **Mirror** runs as a system service and a specific 
-configuration might be stored and use in `/opt/clue/etc/mirror.conf`
-file. VNC server instance can be started and run with the following
-settings:
+**Mirror** is a particular VNC server, designed especially for 
+`Raspberry Pi` devices, allowing to share virtual desktop environment,
+as well as **Kodi** graphical console.
+
+**Mirror** is a fully functional linux program, being deployable on any 
+linux system, dedicated for **Clue** environment when you don't have a 
+monitor attached to your device, providing console sharing over 
+frame buffer and I/O handling over GLES for **Kodi** media player. 
+**Mirror** runs as a system service and a specific configuration might be 
+stored and use in `/etc/mirror.conf` configuration file. VNC server instance 
+can be started and run with the following settings:
 
  - `-c` or `--config-file=FILE` - use the specified configuration file
  - `-d` or `--downscale` - downscales the screen to a quarter in vnc
@@ -28,7 +30,10 @@ specified through the configuration or command line) and then you can display
 the remote content and also you can control it using standard I/O (remote 
 keyboard and mouse).
 
-The main interest of VNC is that it allows to take control of a remote machine, 
-while displaying the screen of it. So you can see in real time what is happening
-on your Raspberry Pi, without having to plug it into a monitor!
+The main goal of this VNC service is to share the remote virtual screen and to 
+allow to control to the remote machine while displaying the screen. With this 
+tool installed on your Raspberry Pi device you can see in real time what is 
+happening on your RPi system without having plug in into a monitor or having a 
+live view what is happening on the remote device without to have access to the 
+connected screen!
 
