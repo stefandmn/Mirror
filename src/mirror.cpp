@@ -79,18 +79,18 @@ int main(int argc, char *argv[])
 		GetConfigData(argc, argv, configData);
 
 		std::cerr <<
-			"Running vnc server with the following settings\n"
-			"  frame-rate = " << configData.frameRate << "\n"
-			"  downscale = " << (configData.downscale ? "true" : "false") << "\n"
-			"  fullscreen = " << (configData.fullscreen ? "true" : "false") << "\n"
-			"  localhost = " << (configData.localhost ? "true" : "false") << "\n"
-			"  multi-threaded = " << (configData.multiThreaded ? "true" : "false") << "\n"
-			"  password = " << (configData.password.length() ? "***" : "") << "\n"
-			"  port = " << configData.port << "\n"
-			"  relative = " << (configData.relative ? "true" : "false") << "\n"
-			"  screen = " << configData.screen << "\n"
-			"  unsafe = " << (configData.unsafe ? "true" : "false") << "\n"
-			"  vnc-params = " << configData.vncParams << "\n";
+			"Running mirror vnc server with the following settings\n"
+			"  framerate        = " << configData.frameRate << "\n"
+			"  downscale        = " << (configData.downscale ? "true" : "false") << "\n"
+			"  fullscreen       = " << (configData.fullscreen ? "true" : "false") << "\n"
+			"  localhost        = " << (configData.localhost ? "true" : "false") << "\n"
+			"  port             = " << configData.port << "\n"
+			"  password         = " << (configData.password.length() ? "******" : "") << "\n"
+			"  relative         = " << (configData.relative ? "true" : "false") << "\n"
+			"  screen           = " << configData.screen << "\n"
+			"  unsafe           = " << (configData.unsafe ? "true" : "false") << "\n"
+			"  multi-threaded   = " << (configData.multiThreaded ? "true" : "false") << "\n"
+			"  vnc-params       = " << configData.vncParams << "\n";
 
 		VNCServer vncServer(BPP, configData.frameRate);
 		vncServer.Run(configData.port, configData.password, configData.screen,
@@ -139,7 +139,7 @@ void GetCommandLineConfigData(int argc, char *argv[], ConfigData& configData)
 		{ "password", required_argument, nullptr, 'P' },
 		{ "port", required_argument, nullptr, 'p' },
 		{ "screen", required_argument, nullptr, 's' },
-		{ "frame-rate", required_argument, nullptr, 't' },
+		{ "framerate", required_argument, nullptr, 't' },
 		{ "vnc-params", required_argument, nullptr, 'v' },
 		{ "help", no_argument, nullptr, CHAR_MIN - 2 },
 		{ nullptr, 0, nullptr, 0 }
@@ -239,7 +239,7 @@ bool ReadConfigFile(const char *programName, const std::string& configFile, Conf
 		if (!readConfig)
 		{
 			const char *baseName = basename(programName);
-			configFileTemp = "/opt/clue/etc/";
+			configFileTemp = "/etc/";
 			configFileTemp += baseName;
 			configFileTemp += ".conf";
 			std::cerr << "trying: " << configFileTemp << '\n';
@@ -260,7 +260,7 @@ bool ReadConfigFile(const char *programName, const std::string& configFile, Conf
 		config.lookupValue("password", configData.password);
 		config.lookupValue("port", configData.port);
 		config.lookupValue("screen", configData.screen);
-		config.lookupValue("frame-rate", configData.frameRate);
+		config.lookupValue("framerate", configData.frameRate);
 		config.lookupValue("vnc-params", configData.vncParams);
 	}
 	else

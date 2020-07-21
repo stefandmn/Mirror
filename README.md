@@ -17,10 +17,10 @@ can be started and run with the following settings:
  - `-f` or `--fullscreen` - always runs fullscreen mode
  - `-l` or `--localhost` - only listens to local ports
  - `-m` or `--multi-threaded` - runs vnc in a separate thread
- - `-p` or `--port=PORT` - makes vnc available on the speficied port
+ - `-p` or `--port=PORT` - makes vnc available on the specified port
  - `-P` or `--password=PASSWORD` - protects the session with PASSWORD
  - `-s` or `--screen=SCREEN` - opens the specified screen number
- - `-t` or `--frame-rate=RATE`- sets the target frame rate, default is 15
+ - `-t` or `--framerate=RATE`- sets the target framerate, default is 15
  - `-v` or `--vnc-params` - parameters to send to libvncserver
  - `--help` - displays help text and exit
 

@@ -1,10 +1,10 @@
 Origin: AMSD
-Package: clue-mirror
-Version: 1.4.1
+Package: mirror
+Version: 2.0.0
 Priority: optional
 Section: main
 Installed-Size: 0000
 Architecture: armhf
 Depends: libvncserver-config, libvncclient0, libvncserver0
 Maintainer: damian.stefan@gmail.com
-Description: VNC module for Clue OS to display native RPi screen
+Description: VNC module for Clue to display native RPi screen
