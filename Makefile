@@ -103,9 +103,9 @@ version:
 # Build addon package in deployment format
 build:
 	$(MAKE) setupenv
+	sudo rm -rf $(BUILDFS)/root/root/$(NAME)
 	sudo cp -rf $(SRCDIR) $(BUILDFS)/root/root/$(NAME)
 	sudo chroot $(BUILDFS)/root /bin/bash -c "cd /root/Mirror && make"
-ifneq ($(shell sudo ls -l $(BUILDFS)/root/root/$(NAME)/mirror 2>/dev/null | wc -l),0)
 ifneq ($(shell [[ -d $(OUTDIR)/dist ]] && echo "yes"),yes)
 	mkdir -p $(OUTDIR)/dist/usr/bin
 	mkdir -p $(OUTDIR)/dist/etc
@@ -115,10 +115,6 @@ ifneq ($(shell [[ -d $(OUTDIR)/dist ]] && echo "yes"),yes)
 endif
 	sudo cp -rf $(BUILDFS)/root/root/$(NAME)/mirror $(OUTDIR)/dist/usr/bin/mirror
 	sudo chown $(USER) $(OUTDIR)/dist/usr/bin/mirror
-else
-	echo "Incomplete build: binary file is missing!"
-	exit 1
-endif
 
 
 distro: build
