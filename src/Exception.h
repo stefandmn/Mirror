@@ -1,7 +1,6 @@
 
 /**
- * Mirror
- * Clue Media Experience
+ * Mirror - [member of Clue Media Experience]
  * Exception.h - declaration and implementation of general Exception object
  */
 

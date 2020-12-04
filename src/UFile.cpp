@@ -1,7 +1,6 @@
 
 /**
- * Mirror
- * Clue Media Experience
+ * Mirror - [member of Clue Media Experience]
  * UFile.cpp - implementation of UFile object
  */
 

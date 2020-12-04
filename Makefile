@@ -186,8 +186,9 @@ help:
 	echo -e "\
 \nSYNOPSIS\n\
        make info \n\
-       version | build | release \n\
-       make gitrev | gittag | version \n\
+       make version | build | distro| release \n\
+       make createenv | cleanenv | prereqs \n\
+       make gitrev | gitrel | git \n\
        make clean | cleanall \n\
        make help \n\
 \nDESCRIPTION\n\
