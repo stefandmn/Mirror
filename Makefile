@@ -103,7 +103,6 @@ version:
 # Build addon package in deployment format
 build:
 	$(MAKE) setupenv
-	sudo rm -rf $(BUILDFS)/root/root/$(NAME)
 	sudo cp -rf $(SRCDIR) $(BUILDFS)/root/root/$(NAME)
 	sudo chroot $(BUILDFS)/root /bin/bash -c "cd /root/Mirror && make"
 ifneq ($(shell [[ -d $(OUTDIR)/dist ]] && echo "yes"),yes)

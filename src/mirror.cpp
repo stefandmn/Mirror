@@ -1,5 +1,6 @@
 
 /**
+ * Mirror
  * Clue Media Experience
  * mirror.cpp - implementation of main logic of Mirror VNC server
  */

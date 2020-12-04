@@ -1,5 +1,6 @@
 
 /**
+ * Mirror
  * Clue Media Experience
  * VNCServer.h - declaration of VNCServer, ImageMap and BandwidthController objects
  */

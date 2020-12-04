@@ -5,6 +5,6 @@ Priority: optional
 Section: main
 Installed-Size: 0000
 Architecture: armhf
-Depends: libvncserver-config, libvncclient0, libvncserver0
+Depends: libvncserver-config, libvncclient1, libvncserver1, libconfig++9v5
 Maintainer: damian.stefan@gmail.com
 Description: VNC module for Clue to display native RPi screen

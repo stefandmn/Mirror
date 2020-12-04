@@ -1,5 +1,6 @@
 
 /**
+ * Mirror
  * Clue Media Experience
  * Resource.h - declaration of Resource object
  */

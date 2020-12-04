@@ -1,5 +1,6 @@
 
 /**
+ * Mirror
  * Clue Media Experience
  * Resource.cpp - implementation of Resource object
  */
