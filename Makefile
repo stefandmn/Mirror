@@ -16,13 +16,17 @@ ifeq ($(DEVICE),)
 	export DEVICE=RPi
 endif
 
+ifeq ($(ARCH),)
+	export ARCH=arm
+endif
+
 ifeq ($(OUTPUT),)
 	export OUTPUT=$(ROOT)/../Clue-out
 endif
 
 
 OUTDIR=$(OUTPUT)/$(NAME)
-BUILDFS=$(OUTPUT)/devel-$(DEVICE).arm-Raspbian
+BUILDFS=$(OUTPUT)/devel-$(DEVICE).$(ARCH)-Raspbian
 DISTRO_VER=$(shell more $(DEBDIR)/control | grep "Version:" | cut -f2 -d":" | sed -e 's/^[ \t]*//')
 DISTRO_REL=$(shell echo "$(DISTRO_VER)" | cut -f1 -d".")
 DISTRO_MAJ=$(shell echo "$(DISTRO_VER)" | cut -f2 -d".")
@@ -37,6 +41,8 @@ info:
 	echo -e "\tPackage File: $(OUTPUT)/targets/$(NAME).tar.gz"
 
 
+# Install prerequisites in order to run the build process over already prepared
+# environment.
 prereqs:
 ifeq ($(shell sudo chroot $(BUILDFS)/root dpkg-query -W -f='${Status} ${Version}\n' libvncserver-dev 2>/dev/null | wc -l),0)
 	sudo chroot $(BUILDFS)/root apt-get update
@@ -44,6 +50,8 @@ ifeq ($(shell sudo chroot $(BUILDFS)/root dpkg-query -W -f='${Status} ${Version}
 endif
 
 
+# Create build environment using using a raspbian image mounted to located file system
+# over qemu for for selected architecture and devices
 setupenv:
 ifeq ($(shell dpkg-query -W -f='${Status} ${Version}\n' qemu 2>/dev/null | wc -l),0)
 	sudo apt-get install qemu
@@ -67,8 +75,8 @@ ifeq ($(shell sudo losetup -a | wc -l),0)
 	sudo mount /dev/loop0p1 $(BUILDFS)/boot
 	sudo mount /dev/loop0p2 $(BUILDFS)/root
 endif
-ifneq ($(shell [[ -f $(BUILDFS)/root/usr/bin/qemu-arm-static ]] && echo "yes"),yes)
-	sudo cp -rf /usr/bin/qemu-arm-static $(BUILDFS)/root/usr/bin/
+ifneq ($(shell [[ -f $(BUILDFS)/root/usr/bin/qemu-$(ARCH)-static ]] && echo "yes"),yes)
+	sudo cp -rf /usr/bin/qemu-$(ARCH)-static $(BUILDFS)/root/usr/bin/
 endif
 ifeq ($(shell [[ -f $(BUILDFS)/root/etc/ld.so.preload ]] && echo "yes"),yes)
 	sudo rm -rf $(BUILDFS)/root/etc/ld.so.preload
@@ -81,6 +89,7 @@ endif
 	$(MAKE) prereqs
 
 
+# Clean-up prepared environment for building process
 cleanenv:
 ifneq ($(shell mount | grep "/root/proc" 2>/dev/null | wc -l),0)
 	sudo umount $(BUILDFS)/root/proc
@@ -116,6 +125,8 @@ endif
 	sudo chown $(USER) $(OUTDIR)/dist/usr/bin/mirror
 
 
+# Create app distribution strcuture in order to be packed and delivered in some command and
+# standard formats (DEB package and TAR,GZ archive)
 distro: build
 	mkdir -p ${OUTDIR}/dist/DEBIAN
 	sudo cp -rf ${ROOT}/$(DEBDIR)/* ${OUTDIR}/dist/DEBIAN/
@@ -159,7 +170,8 @@ endif
 	$(MAKE) gitrel
 
 
-# Create a complete release: new build, publish it in the repository, update the versioning
+# Create a complete release: new version, build application, create distribution, update the
+# versioning, and last step is to clean-ul the environment.
 release:
 	$(MAKE) version
 	$(MAKE) distro
@@ -167,7 +179,7 @@ release:
 	$(MAKE) clean
 
 
-# Clean-up the release
+# Clean-up the release resources
 clean:
 ifneq ($(shell sudo losetup -a | wc -l),0)
 	sudo rm -rf $(BUILDFS)/root/root/$(NAME)
@@ -177,7 +189,7 @@ endif
 
 
 # Clean-up all build distributions, cache and stamps
-cleanall:
+cleanall: clean
 	sudo rm -rf $(OUTDIR)/* $(OUTDIR)/.stamp $(OUTDIR)/.ccache
 
 
@@ -202,9 +214,20 @@ help:
                   create local new version within local addon descriptor (addon.xml),\n\
                   the new version being the incremented value fo previous version\n\
                   (for the minor version number)\n\
+    setupenv\n\
+                  create build environment using using a raspbian image mounted to located \n\
+                  file system over qemu for for selected architecture and devices\n\
+    cleanenv\n\
+                  clean-up prepared environment for building process\n\
+    prereqs\n\
+                  install prerequisites in order to run the build process over already prepared\n\
+                  environment\n\
     build\n\
                   build the addon package along to the new version and prepare the release\n\
                   package file within location $(OUTPUT)/targets/$(NAME).tar.gz\n\
+    distro\n\
+                  create app distribution strcuture in order to be packed and delivered in some \n\
+                  command and standard formats (DEB package and TAR,GZ archive)\n\
     release\n\
                   Build the addon providing new local version, make release and publish it\n\
                   on the Clue repository (already mounted to the local file system). Then\n\
