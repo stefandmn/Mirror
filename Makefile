@@ -254,6 +254,7 @@ help:
 EXAMPLES\n\
        build the entire distribution ('build' make task is default)\n\
        > make build\n\n\
-       make complete addon release: build it, publish it and commit the changes on GitHub\n\
+       make complete application package: setup new version, build the sources, make distribution packages \n\
+       and commit the changes on GitHub\n\
        > make release\n\n\
 " | more
