@@ -1,9 +1,7 @@
-CXX = g++
 CXXFLAGS = -Wall -std=c++11 -O3 -DHAVE_LIBBCM_HOST -DUSE_EXTERNAL_LIBBCM_HOST -DUSE_VCHIQ_ARM
-
-INCLUDES = -I/opt/vc/include/ -I/opt/vc/include/interface/vcos/pthreads -I/opt/vc/include/interface/vmcs_host/linux
+LIBFLAGS = -lbrcmEGL -lbrcmGLESv2 -lopenmaxil -lbcm_host -lvcos -lvchiq_arm -lpthread -lrt -lvncserver -lconfig++
+INC_PATHS = -I/opt/vc/include/ -I/opt/vc/include/interface/vcos/pthreads -I/opt/vc/include/interface/vmcs_host/linux
 LIB_PATHS = -L/opt/vc/lib/
-LIBS = -lbrcmEGL -lbrcmGLESv2 -lopenmaxil -lbcm_host -lvcos -lvchiq_arm -lpthread -lrt -lvncserver -lconfig++
 
 SOURCES = mirror.cpp \
 		UFile.cpp \
@@ -18,10 +16,10 @@ OBJS = $(SOURCES:.cpp=.o)
 MAIN = mirror
 
 $(MAIN): $(OBJS)
-		 $(CXX) $(CXXFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LIB_PATHS) $(LIBS)
+		 $(CXX) $(CXXFLAGS) $(INC_PATHS) -o $(MAIN) $(OBJS) $(LIB_PATHS) $(LIBFLAGS)
 
 .cpp.o:
-		$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+		$(CXX) $(CXXFLAGS) $(INC_PATHS) -c $< -o $@
 
 clean: 
 		$(RM) *.o *~ $(MAIN)
