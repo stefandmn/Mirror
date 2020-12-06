@@ -12,10 +12,6 @@ SRCDIR=src
 DEBDIR=deb
 
 
-ifeq ($(DEVICE),)
-	export DEVICE=RPi
-endif
-
 ifeq ($(ARCH),)
 	export ARCH=arm
 endif
@@ -26,7 +22,7 @@ endif
 
 
 OUTDIR=$(OUTPUT)/$(NAME)
-BUILDFS=$(OUTPUT)/devel-$(DEVICE).$(ARCH)-Raspbian
+BUILDFS=$(OUTPUT)/devel-Raspbian
 DISTRO_VER=$(shell more $(DEBDIR)/control | grep "Version:" | cut -f2 -d":" | sed -e 's/^[ \t]*//')
 DISTRO_REL=$(shell echo "$(DISTRO_VER)" | cut -f1 -d".")
 DISTRO_MAJ=$(shell echo "$(DISTRO_VER)" | cut -f2 -d".")
@@ -52,7 +48,7 @@ endif
 
 # Create build environment using using a raspbian image mounted to located file system
 # over qemu for for selected architecture and devices
-setupenv:
+envup:
 ifeq ($(shell dpkg-query -W -f='${Status} ${Version}\n' qemu 2>/dev/null | wc -l),0)
 	sudo apt-get install qemu
 endif
@@ -90,7 +86,7 @@ endif
 
 
 # Clean-up prepared environment for building process
-cleanenv:
+envdown:
 ifneq ($(shell mount | grep "/root/proc" 2>/dev/null | wc -l),0)
 	sudo umount $(BUILDFS)/root/proc
 	sudo umount $(BUILDFS)/root/sys
@@ -111,18 +107,12 @@ version:
 
 # Build addon package in deployment format
 build:
-	$(MAKE) setupenv
+	$(MAKE) envup
 	sudo cp -rf $(SRCDIR) $(BUILDFS)/root/root/$(NAME)
-	sudo chroot $(BUILDFS)/root /bin/bash -c "cd /root/Mirror && make"
-ifneq ($(shell [[ -d $(OUTDIR)/dist ]] && echo "yes"),yes)
-	mkdir -p $(OUTDIR)/dist/usr/bin
-	mkdir -p $(OUTDIR)/dist/etc
-	mkdir -p $(OUTDIR)/dist/lib
-	cp -rf $(ROOT)/$(SYSDIR)/etc/* $(OUTDIR)/dist/etc/
-	cp -rf $(ROOT)/$(SYSDIR)/lib/* $(OUTDIR)/dist/lib/
-endif
-	sudo cp -rf $(BUILDFS)/root/root/$(NAME)/mirror $(OUTDIR)/dist/usr/bin/mirror
-	sudo chown $(USER) $(OUTDIR)/dist/usr/bin/mirror
+	sudo cp -rf $(SYSDIR) $(BUILDFS)/root/root/$(NAME)/$(SYSDIR)
+	sudo chroot $(BUILDFS)/root /bin/bash -c "cd /root/Mirror && make install"
+	sudo cp -rf $(BUILDFS)/root/root/$(NAME)/out $(OUTDIR)/dist
+	sudo chown -R $(USER) $(OUTDIR)/dist
 
 
 # Create app distribution strcuture in order to be packed and delivered in some command and
@@ -199,7 +189,7 @@ help:
 \nSYNOPSIS\n\
        make info \n\
        make version | build | distro| release \n\
-       make createenv | cleanenv | prereqs \n\
+       make envup | envdown | prereqs \n\
        make gitrev | gitrel | git \n\
        make clean | cleanall \n\
        make help \n\
@@ -214,10 +204,10 @@ help:
                   create local new version within local addon descriptor (addon.xml),\n\
                   the new version being the incremented value fo previous version\n\
                   (for the minor version number)\n\
-    setupenv\n\
+    envup\n\
                   create build environment using using a raspbian image mounted to located \n\
                   file system over qemu for for selected architecture and devices\n\
-    cleanenv\n\
+    envdown\n\
                   clean-up prepared environment for building process\n\
     prereqs\n\
                   install prerequisites in order to run the build process over already prepared\n\

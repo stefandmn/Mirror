@@ -2,7 +2,7 @@
 Description=Clue Mirror
 Before=multi-user.target
 After=network.target local-fs.target
-Wants=picam.service bridge.service kodi.service
+Wants=kodi.service
 
 [Service]
 Type=simple
