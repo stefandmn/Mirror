@@ -30,15 +30,15 @@ clean:
 
 install: $(OBJDIR)/$(TARGET)
 	mkdir -p $(OUTDIR)/usr/bin
+	mkdir -p $(OUTDIR)/usr/lib
 	mkdir -p $(OUTDIR)/etc
-	mkdir -p $(OUTDIR)/lib
 	cp -rf $(OBJDIR)/$(TARGET) $(OUTDIR)/usr/bin
 ifeq ($(shell [[ -d ./$(SYSDIR) ]] && echo "yes"),yes)
 	cp -rf $(SYSDIR)/etc/* $(OUTDIR)/etc/
-	cp -rf $(SYSDIR)/lib/* $(OUTDIR)/lib/
+	cp -rf $(SYSDIR)/usr/lib/* $(OUTDIR)/usr/lib/
 else
 ifeq ($(shell [[ -d ../$(SYSDIR) ]] && echo "yes"),yes)
 	cp -rf ../$(SYSDIR)/etc/* $(OUTDIR)/etc/
-	cp -rf ../$(SYSDIR)/lib/* $(OUTDIR)/lib/
+	cp -rf ../$(SYSDIR)/usr/lib/* $(OUTDIR)/usr/lib/
 endif
 endif
