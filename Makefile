@@ -60,10 +60,14 @@ ifneq ($(shell [[ -d $(BUILDFS) ]] && echo "yes"),yes)
 	mkdir -p $(BUILDFS)/boot
 endif
 ifneq ($(shell [[ -f $(BUILDFS)/raspbian.img ]] && echo "yes"),yes)
+ifeq ($(shell [[ -f $(HOME)/Downloads/raspbian.img ]] && echo "yes"),yes)
+	rsync --progress $(HOME)/Downloads/raspbian.img $(BUILDFS)/raspbian.img
+else
 	wget http://downloads.raspberrypi.org/raspbian_latest -O /tmp/raspbian.zip
 	unzip /tmp/raspbian.zip -d $(BUILDFS)/
 	mv $(BUILDFS)/*.img $(BUILDFS)/raspbian.img
 	rm -rf /tmp/raspbian.zip
+endif
 endif
 ifeq ($(shell sudo losetup -a | wc -l),0)
 	sudo losetup -D
@@ -111,6 +115,7 @@ build:
 	sudo cp -rf $(SRCDIR) $(BUILDFS)/root/root/$(NAME)
 	sudo cp -rf $(SYSDIR) $(BUILDFS)/root/root/$(NAME)/$(SYSDIR)
 	sudo chroot $(BUILDFS)/root /bin/bash -c "cd /root/Mirror && make install"
+	mkdir -p $(OUTDIR)
 	sudo cp -rf $(BUILDFS)/root/root/$(NAME)/out $(OUTDIR)/dist
 	sudo chown -R $(USER) $(OUTDIR)/dist
 
@@ -123,8 +128,9 @@ distro: build
 	sudo chmod 755 ${OUTDIR}/dist/DEBIAN/*
 	sudo sed -i "s|Installed-Size: 0000|Installed-Size: $(shell du -s $(OUTDIR)/dist | cut -f 1)|g" $(OUTDIR)/dist/DEBIAN/control
 	sudo chown -R root:root $(OUTDIR)/dist
+	mkdir -p $(OUTPUT)/targets
 	/usr/bin/dpkg-deb -z8 -Zgzip --build $(OUTDIR)/dist $(OUTPUT)/targets/$(NAME).deb >/dev/null
-	cd ${OUTDIR}/dist && /bin/tar -zcvf $(OUTPUT)/targets/$(NAME).tar.gz usr etc lib >/dev/null
+	cd ${OUTDIR}/dist && /bin/tar -zcvf $(OUTPUT)/targets/$(NAME).tar.gz usr etc >/dev/null
 
 
 # Commit and push updated files into versioning system (GitHUB). The 'message' input
@@ -174,7 +180,7 @@ clean:
 ifneq ($(shell sudo losetup -a | wc -l),0)
 	sudo rm -rf $(BUILDFS)/root/root/$(NAME)
 endif
-	$(MAKE) cleanenv
+	$(MAKE) envdown
 	sudo rm -rf $(OUTDIR)
 
 
