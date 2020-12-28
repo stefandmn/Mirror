@@ -1,13 +1,13 @@
 # Mirror
 
 **Mirror** is a particular VNC server, designed especially for 
-`Raspberry Pi` devices, allowing to share virtual desktop environment,
-as well as **Kodi** graphical console.
+`Raspberry Pi` devices and **Clue** OS, allowing to share virtual 
+desktop environments.
 
 **Mirror** is a fully functional linux program, being deployable on any 
-linux system, dedicated for **Clue** environment when you don't have a 
-monitor attached to your device, providing console sharing over 
-frame buffer and I/O handling over GLES for **Kodi** media player. 
+linux system, but dedicated for **Clue** environment when want to test or 
+to see the console but you don't have a monitor/TV attached to your device, 
+providing console sharing over frame buffer and I/O handling through GLES. 
 **Mirror** runs as a system service and a specific configuration might be 
 stored and use in `/etc/mirror.conf` configuration file. VNC server instance 
 can be started and run with the following settings:
@@ -23,6 +23,13 @@ can be started and run with the following settings:
  - `-t` or `--framerate=RATE`- sets the target framerate, default is 15
  - `-v` or `--vnc-params` - parameters to send to libvncserver
  - `--help` - displays help text and exit
+
+As a particularity of **Clue** environment the service is looking first into
+`$HOME/.cache/services/mirror.conf` user location (should be on the R/W drive), 
+if it not found will check`$HOME/.config/mirror.conf` location and at the end,
+in case neither this one is not found it will try to find default configuration 
+file in `/etc/mirror.conf`.The service is starting only when the local file system
+is mounted and when the network services are up and running.
 
 Using any compatible VNC client installed on your workstation you can connect 
 using RPi IP address and standard VNC port (or the custom one - in case it is 

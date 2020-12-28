@@ -239,7 +239,8 @@ bool ReadConfigFile(const char *programName, const std::string& configFile, Conf
 		if (!readConfig)
 		{
 			const char *baseName = basename(programName);
-			configFileTemp = "/clue/.config/";
+			configFileTemp = getenv("HOME");
+			configFileTemp += "/.cache/services/";
 			configFileTemp += baseName;
 			configFileTemp += ".conf";
 			std::cerr << "trying: " << configFileTemp << '\n';
@@ -247,11 +248,21 @@ bool ReadConfigFile(const char *programName, const std::string& configFile, Conf
 			if (!readConfig)
 			{
 				const char *baseName = basename(programName);
-				configFileTemp = "/etc/";
+				configFileTemp = getenv("HOME");
+				configFileTemp += "/.config/";
 				configFileTemp += baseName;
 				configFileTemp += ".conf";
 				std::cerr << "trying: " << configFileTemp << '\n';
 				readConfig = TryReadConfigFile(config, configFileTemp);
+				if (!readConfig)
+				{
+					const char *baseName = basename(programName);
+					configFileTemp = "/etc/";
+					configFileTemp += baseName;
+					configFileTemp += ".conf";
+					std::cerr << "trying: " << configFileTemp << '\n';
+					readConfig = TryReadConfigFile(config, configFileTemp);
+				}
 			}
 		}
 	}

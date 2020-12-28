@@ -61,8 +61,10 @@ ifneq ($(shell [[ -d $(BUILDFS) ]] && echo "yes"),yes)
 endif
 ifneq ($(shell [[ -f $(BUILDFS)/raspbian.img ]] && echo "yes"),yes)
 ifeq ($(shell [[ -f $(HOME)/Downloads/raspbian.img ]] && echo "yes"),yes)
+	echo "Deploying raspbian.img"
 	rsync --progress $(HOME)/Downloads/raspbian.img $(BUILDFS)/raspbian.img
 else
+	echo "Downloading raspbian.img"
 	wget http://downloads.raspberrypi.org/raspbian_latest -O /tmp/raspbian.zip
 	unzip /tmp/raspbian.zip -d $(BUILDFS)/
 	mv $(BUILDFS)/*.img $(BUILDFS)/raspbian.img
@@ -112,6 +114,7 @@ version:
 # Build addon package in deployment format
 build:
 	$(MAKE) envup
+	sudo rm -rf $(BUILDFS)/root/root/$(NAME)
 	sudo cp -rf $(SRCDIR) $(BUILDFS)/root/root/$(NAME)
 	sudo cp -rf $(SYSDIR) $(BUILDFS)/root/root/$(NAME)/$(SYSDIR)
 	sudo chroot $(BUILDFS)/root /bin/bash -c "cd /root/Mirror && make install"
