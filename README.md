@@ -24,12 +24,11 @@ can be started and run with the following settings:
  - `-v` or `--vnc-params` - parameters to send to libvncserver
  - `--help` - displays help text and exit
 
-As a particularity of **Clue** environment the service is looking first into
-`$HOME/.cache/services/mirror.conf` user location (should be on the R/W drive), 
-if it not found will check`$HOME/.config/mirror.conf` location and at the end,
-in case neither this one is not found it will try to find default configuration 
-file in `/etc/mirror.conf`.The service is starting only when the local file system
-is mounted and when the network services are up and running.
+As a particularity of **Clue** environment, the service is looking first into
+`$HOME/.config/mirror.conf` user location and, in case this one is not found 
+it will try to find default configuration  file in `/etc/mirror.conf`. The 
+service is starting only when the local file system is mounted and when the 
+network services are up and running.
 
 Using any compatible VNC client installed on your workstation you can connect 
 using RPi IP address and standard VNC port (or the custom one - in case it is 
