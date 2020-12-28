@@ -153,6 +153,7 @@ endif
 # done later - manually or through a separate task and thus the tag is transformed into a
 # addon release
 gitrel:
+	echo "Creating new release: $(DISTRO_VER)"
 	git tag "$(DISTRO_VER)"
 	git push origin --tags
 
