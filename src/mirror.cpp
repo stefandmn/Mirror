@@ -310,7 +310,7 @@ void usage(const char *programName)
 		"  -P, --password=PASSWORD      protects the session with PASSWORD\n"
 		"  -r, --relative               relative mouse movements\n"
 		"  -s, --screen=SCREEN          opens the specified screen number\n"
-		"  -t, --frame-rate=RATE        sets the target frame rate, default is 15\n"
+		"  -t, --framerate=RATE        sets the target frame rate, default is 15\n"
 		"  -u, --unsafe                 disables more robust handling of resolution\n"
 		"                               change at a small performance gain\n"
 		"  -v, --vnc-params             parameters to send to libvncserver\n"
